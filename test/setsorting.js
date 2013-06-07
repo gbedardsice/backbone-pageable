@@ -90,6 +90,15 @@ $(document).ready(function () {
     col.setSorting(null);
     ok(_.isUndefined(col.comparator));
     ok(_.isUndefined(col.fullCollection.comparator));
+
+    col.setSorting("id", -1, {
+      makeComparator: function(sortKey, order) {
+        return "id";
+      }
+    });
+    col.fullCollection.sort();
+    strictEqual(col.fullCollection.comparator, "id");
+    deepEqual(col.fullCollection.toJSON(), [{id: 1}, {id: 2}, {id: 3}]);
   });
 
 });
